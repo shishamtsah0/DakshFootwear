@@ -15,23 +15,23 @@ const Navigation = () => {
               <span className="block py-2 px-1 transition-colors duration-300">Home</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
             </Link>
-            <a href="#best" className="relative text-secondary hover:text-primary group">
+            <a href="/#best" className="relative text-secondary hover:text-primary group">
               <span className="block py-2 px-1 transition-colors duration-300">BEST Collection</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
             </a>
-            <a href="#walkaroo" className="relative text-secondary hover:text-primary group">
+            <a href="/#walkaroo" className="relative text-secondary hover:text-primary group">
               <span className="block py-2 px-1 transition-colors duration-300">Walkaroo</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
             </a>
-            <a href="#action" className="relative text-secondary hover:text-primary group">
+            <a href="/#action" className="relative text-secondary hover:text-primary group">
               <span className="block py-2 px-1 transition-colors duration-300">Action</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
             </a>
-            <a href="#brilliant" className="relative text-secondary hover:text-primary group">
+            <a href="/#brilliant" className="relative text-secondary hover:text-primary group">
               <span className="block py-2 px-1 transition-colors duration-300">Brilliant</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
             </a>
-            <a href="#chinese" className="relative text-secondary hover:text-primary group">
+            <a href="/#chinese" className="relative text-secondary hover:text-primary group">
               <span className="block py-2 px-1 transition-colors duration-300">Chinese</span>
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
             </a>
@@ -40,11 +40,11 @@ const Navigation = () => {
                 <span className="block py-2 px-1 transition-colors duration-300">More</span>
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
               </Link>
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block z-10">
-                <a href="#" className="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 5</a>
-                <a href="#" className="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 6</a>
-                <a href="#" className="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 7</a>
-              </div>
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block z-10">
+                  <a href="#" className="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 5</a>
+                  <a href="#" className="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 6</a>
+                  <a href="#" className="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 7</a>
+                </div>
             </div>
             <Link to="/contact" className="relative text-secondary hover:text-primary group">
               <span className="block py-2 px-1 transition-colors duration-300">Contact Us</span>
@@ -70,11 +70,11 @@ const Navigation = () => {
         <div id="mobile-menu" className="lg:hidden hidden mt-4 pb-4 border-t border-gray-300">
           <div className="flex flex-col space-y-3 pt-4">
             <Link to="/" className="text-primary font-medium">Home</Link>
-            <a href="#best" className="text-secondary hover:text-primary transition-colors duration-200">BEST Collection</a>
-            <a href="#walkaroo" className="text-secondary hover:text-primary transition-colors duration-200">Walkaroo</a>
-            <a href="#action" className="text-secondary hover:text-primary transition-colors duration-200">Action</a>
-            <a href="#brilliant" className="text-secondary hover:text-primary transition-colors duration-200">Brilliant</a>
-            <a href="#chinese" className="text-secondary hover:text-primary transition-colors duration-200">Chinese</a>
+            <a href="/#best" className="text-secondary hover:text-primary transition-colors duration-200">BEST Collection</a>
+            <a href="/#walkaroo" className="text-secondary hover:text-primary transition-colors duration-200">Walkaroo</a>
+            <a href="/#action" className="text-secondary hover:text-primary transition-colors duration-200">Action</a>
+            <a href="/#brilliant" className="text-secondary hover:text-primary transition-colors duration-200">Brilliant</a>
+            <a href="/#chinese" className="text-secondary hover:text-primary transition-colors duration-200">Chinese</a>
             <Link to="/search" className="text-secondary hover:text-primary transition-colors duration-200">More</Link>
             <Link to="/contact" className="text-secondary hover:text-primary transition-colors duration-200">Contact Us</Link>
           </div>

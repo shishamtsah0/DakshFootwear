@@ -201,8 +201,7 @@ const ProductPage = () => {
             </div>
             <div className="mb-6">
               <div className="flex items-center space-x-3">
-                <span className="text-3xl font-bold text-primary">$129.99</span>
-                <span className="text-xl text-gray-500 line-through">$179.99</span>
+
                 <span className="bg-primary text-white text-sm px-2 py-1 rounded">28% OFF</span>
               </div>
             </div>
@@ -248,7 +247,7 @@ const ProductPage = () => {
                   <div className="w-5 h-5 flex items-center justify-center mr-2">
                     <i className="ri-truck-line"></i>
                   </div>
-                  <span>Free shipping over $100</span>
+                  <span>Free shipping available</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-5 h-5 flex items-center justify-center mr-2">
@@ -376,7 +375,7 @@ const ProductPage = () => {
                         </div>
                       </div>
                       <p className="text-gray-600 text-sm mb-2">
-                        Solid shoes for the price. Good build quality and comfortable for daily wear. Would buy again.
+                        Solid shoes with good build quality and comfortable for daily wear. Would buy again.
                       </p>
                       <span className="text-xs text-gray-500">3 weeks ago</span>
                     </div>
@@ -395,7 +394,7 @@ const ProductPage = () => {
                   alt="Athletic Sneakers" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="font-medium text-gray-900 mb-2">Urban Athletic Sneakers</h3>
-              <p className="text-primary font-bold">$89.99</p>
+
             </Link>
             <Link to="/product" className="group block">
               <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-4">
@@ -403,7 +402,7 @@ const ProductPage = () => {
                   alt="Casual Walkers" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="font-medium text-gray-900 mb-2">Comfort Walk Shoes</h3>
-              <p className="text-primary font-bold">$79.99</p>
+
             </Link>
             <Link to="/product" className="group block">
               <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-4">
@@ -411,7 +410,7 @@ const ProductPage = () => {
                   alt="Basketball Shoes" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="font-medium text-gray-900 mb-2">Pro Basketball Shoes</h3>
-              <p className="text-primary font-bold">$149.99</p>
+
             </Link>
             <Link to="/product" className="group block">
               <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-4">
@@ -419,7 +418,7 @@ const ProductPage = () => {
                   alt="Training Shoes" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="font-medium text-gray-900 mb-2">Cross Training Shoes</h3>
-              <p className="text-primary font-bold">$99.99</p>
+
             </Link>
           </div>
         </div>
