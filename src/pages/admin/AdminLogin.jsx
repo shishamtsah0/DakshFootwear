@@ -10,14 +10,37 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    
     try {
       console.log('Attempting login with:', { username, password });
+      
       const result = await auth.login(username, password);
       console.log('Login response:', result);
-      navigate('/admin/dashboard');
+      
+      if (result.access_token) {
+        console.log('Login successful, redirecting...');
+        navigate('/admin/dashboard');
+      } else {
+        console.error('No access token in response:', result);
+        setError('Invalid response from server');
+      }
     } catch (err) {
-      console.error('Login error:', err.response?.data || err);
-      setError(err.response?.data?.message || 'Invalid credentials');
+      console.error('Login error:', err);
+      
+      if (err.response) {
+        // The request was made and the server responded with a status code
+        console.error('Server response:', err.response.data);
+        setError(err.response.data.message || 'Server error');
+      } else if (err.request) {
+        // The request was made but no response was received
+        console.error('No response received:', err.request);
+        setError('Could not connect to server');
+      } else {
+        // Something happened in setting up the request
+        console.error('Request setup error:', err.message);
+        setError('Request failed: ' + err.message);
+      }
     }
   };
 

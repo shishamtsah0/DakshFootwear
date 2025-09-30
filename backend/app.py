@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from config import Config
@@ -13,16 +13,21 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize extensions with proper CORS settings
-    CORS(app, resources={
-        r"/api/*": {
-            "origins": ["https://symmetrical-space-spork-4jpqw5p4qv5gh74j5-5173.app.github.dev"],
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"]
-        }
-    })
+    # Enable CORS for development
+    CORS(app, 
+         origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+         allow_credentials=True,
+         supports_credentials=True,
+         allow_headers=["Content-Type", "Authorization"],
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+         expose_headers=["Content-Type", "Authorization"])
     JWTManager(app)
     init_db(app)
+
+    # Add a test route
+    @app.route('/api/test', methods=['GET'])
+    def test():
+        return jsonify({"message": "Backend is working!"})
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix='/api/auth')

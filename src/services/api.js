@@ -1,12 +1,17 @@
 import axios from 'axios';
 
-const API_URL = 'https://symmetrical-space-spork-4jpqw5p4qv5gh74j5-5000.app.github.dev/api';
+const API_URL = 'http://localhost:5000/api';
+
+console.log('API URL:', API_URL); // Debug log
 
 const api = axios.create({
   baseURL: API_URL,
+  withCredentials: false, // Changed to false since we're not using cookies
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   },
+  timeout: 10000, // 10 second timeout
 });
 
 // Add token to requests if available
@@ -21,14 +26,27 @@ api.interceptors.request.use((config) => {
 export const auth = {
   login: async (username, password) => {
     try {
+      console.log('Attempting login request to:', API_URL + '/auth/login');
       const response = await api.post('/auth/login', { username, password });
+      console.log('Login response:', response.data);
       const { access_token } = response.data;
       if (access_token) {
         localStorage.setItem('admin_token', access_token);
       }
       return response.data;
     } catch (error) {
-      console.error('Login error:', error.response?.data || error.message);
+      console.error('Login error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        headers: error.response?.headers,
+        config: {
+          url: error.config?.url,
+          method: error.config?.method,
+          baseURL: error.config?.baseURL,
+          headers: error.config?.headers
+        }
+      });
       throw error;
     }
   },
