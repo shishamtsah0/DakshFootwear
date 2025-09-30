@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Navigation = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const toggleMobile = () => setMobileOpen(v => !v);
+
   return (
     <nav className="sticky top-0 z-50 bg-[#fafafa] border-b border-gray-300 transition-all duration-300">
       <div className="w-full px-6 py-4">
@@ -61,13 +66,19 @@ const Navigation = () => {
             <Link to="/search" className="lg:hidden w-8 h-8 flex items-center justify-center text-secondary hover:text-primary transition-colors duration-300">
               <i className="ri-search-line text-xl"></i>
             </Link>
-            <button id="mobile-menu-btn" className="lg:hidden w-8 h-8 flex items-center justify-center">
+            <button
+              id="mobile-menu-btn"
+              aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+              onClick={toggleMobile}
+              className="lg:hidden w-8 h-8 flex items-center justify-center"
+            >
               <i className="ri-menu-line text-xl"></i>
             </button>
           </div>
         </div>
         {/* Mobile Navigation */}
-        <div id="mobile-menu" className="lg:hidden hidden mt-4 pb-4 border-t border-gray-300">
+        <div id="mobile-menu" className={`lg:hidden ${mobileOpen ? '' : 'hidden'} mt-4 pb-4 border-t border-gray-300`}>
           <div className="flex flex-col space-y-3 pt-4">
             <Link to="/" className="text-primary font-medium">Home</Link>
             <a href="/#best" className="text-secondary hover:text-primary transition-colors duration-200">BEST Collection</a>

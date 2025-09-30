@@ -88,16 +88,7 @@ const ProductPage = () => {
       });
     });
 
-    // Mobile menu
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const handleMobileMenuClick = () => {
-      mobileMenu?.classList.toggle('hidden');
-    };
-
-    if (mobileMenuBtn) {
-      mobileMenuBtn.addEventListener('click', handleMobileMenuClick);
-    }
+    // Mobile menu is handled in the Navigation component via React state.
 
     // Scroll animations
     const observerOptions = {
@@ -134,9 +125,7 @@ const ProductPage = () => {
     });
 
     return () => {
-      if (mobileMenuBtn) {
-        mobileMenuBtn.removeEventListener('click', handleMobileMenuClick);
-      }
+      // nothing to cleanup for mobile menu here
       observer.disconnect();
     };
   }, []);

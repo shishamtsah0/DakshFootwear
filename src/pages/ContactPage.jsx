@@ -40,16 +40,7 @@ const ContactPage = () => {
       observer.observe(el);
     });
 
-    // Mobile menu
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const handleMobileMenuClick = () => {
-      mobileMenu?.classList.toggle('hidden');
-    };
-
-    if (mobileMenuBtn) {
-      mobileMenuBtn.addEventListener('click', handleMobileMenuClick);
-    }
+    // Mobile menu is handled in the Navigation component via React state.
 
     // Scroll animations
     const scrollObserver = new IntersectionObserver(function(entries) {
@@ -85,9 +76,7 @@ const ContactPage = () => {
       if (form) {
         form.removeEventListener('submit', handleSubmit);
       }
-      if (mobileMenuBtn) {
-        mobileMenuBtn.removeEventListener('click', handleMobileMenuClick);
-      }
+      // no cleanup required for mobile menu here
       observer.disconnect();
       scrollObserver.disconnect();
     };

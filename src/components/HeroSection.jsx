@@ -16,7 +16,7 @@ const HeroSection = () => {
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
               Discover our extensive range of high-quality footwear from trusted brands. From casual slippers to premium sneakers, we offer wholesale and retail solutions for all your needs.
             </p>
-            <a href="search.html" className="inline-block !rounded-button whitespace-nowrap bg-primary text-white px-8 py-4 text-lg font-semibold hover:bg-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <a href="/search" className="inline-block !rounded-button whitespace-nowrap bg-primary text-white px-8 py-4 text-lg font-semibold hover:bg-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
               Explore Now
             </a>
           </div>

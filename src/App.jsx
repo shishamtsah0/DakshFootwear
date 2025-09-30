@@ -11,17 +11,7 @@ import './App.css'
 
 function HomePage() {
   useEffect(() => {
-    // Mobile menu functionality
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    const handleMobileMenuClick = () => {
-      mobileMenu?.classList.toggle('hidden');
-    };
-
-    if (mobileMenuBtn) {
-      mobileMenuBtn.addEventListener('click', handleMobileMenuClick);
-    }
+    // Note: mobile menu is handled within the Navigation component via React state.
 
     // Scroll animations
     const observerOptions = {
@@ -106,9 +96,7 @@ function HomePage() {
 
     // Cleanup function
     return () => {
-      if (mobileMenuBtn) {
-        mobileMenuBtn.removeEventListener('click', handleMobileMenuClick);
-      }
+      // nothing to cleanup for mobile-menu here
       observer.disconnect();
     };
   }, []);
