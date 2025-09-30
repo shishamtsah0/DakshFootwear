@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import HeroSection from './components/HeroSection'
 import BrandSections from './components/BrandSections'
@@ -7,7 +7,17 @@ import Footer from './components/Footer'
 import ContactPage from './pages/ContactPage'
 import ProductPage from './pages/ProductPage'
 import SearchPage from './pages/SearchPage'
+import AdminLogin from './pages/admin/AdminLogin'
+import AdminDashboard from './pages/admin/AdminDashboard'
 import './App.css'
+
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem('admin_token');
+  if (!token) {
+    return <Navigate to="/admin/login" replace />;
+  }
+  return children;
+};
 
 function HomePage() {
   useEffect(() => {
@@ -139,22 +149,41 @@ function ScrollToHash() {
   return null;
 }
 
+function AppContent() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <div className="bg-white text-secondary font-sans overflow-x-hidden">
+      {!isAdminRoute && <Navigation />}
+      <ScrollToHash />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/product" element={<ProductPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/*" element={
+          <ProtectedRoute>
+            <Routes>
+              <Route path="dashboard" element={<AdminDashboard />} />
+            </Routes>
+          </ProtectedRoute>
+        } />
+      </Routes>
+      {!isAdminRoute && <Footer />}
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <div className="bg-white text-secondary font-sans overflow-x-hidden">
-        <Navigation />
-        <ScrollToHash />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/search" element={<SearchPage />} />
-        </Routes>
-        <Footer />
-      </div>
+      <AppContent />
     </Router>
-  )
+  );
 }
 
 export default App
