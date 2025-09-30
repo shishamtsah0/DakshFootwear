@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - Daksh FootWear</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e02f26',
+                        secondary: '#171717'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        .filter-animation {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .product-card {
+            transition: all 0.3s ease-in-out, background-color 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent);
+            transition: height 0.3s ease;
+            z-index: 1;
+        }
+
+        .product-card:hover {
+            background-color: #fafafa;
+        }
+
+        .product-card:hover::after {
+            height: 100%;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-input-animation {
+            transition: all 0.3s ease;
+        }
+
+        .search-input-animation:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(224, 47, 38, 0.1);
+        }
+
+        .product-image {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+            transform-origin: center center;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.12) translateY(-2%);
+            filter: brightness(1.08) contrast(1.05);
+        }
+
+        .product-info-wrapper {
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-info-wrapper {
+            transform: translateY(-4px);
+        }
+
+        .animate-pulse-soft {
+            animation: pulseSoft 2s infinite;
+        }
+
+        @keyframes pulseSoft {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .search-focus:focus {
+            outline: none;
+            border-color: #e02f26;
+            box-shadow: 0 0 0 3px rgba(224, 47, 38, 0.1);
+        }
+
+        .custom-radio {
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .custom-radio:checked {
+            border-color: #e02f26;
+            background-color: #e02f26;
+        }
+
+        .custom-radio:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .dropdown-content.open {
+            max-height: 200px;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-secondary">
+    <div class="min-h-screen">
+        <div id="brand-1"></div>
+        <div id="brand-2"></div>
+        <div id="brand-3"></div>
+        <div id="brand-4"></div>
+        <!-- Navigation -->
+        <nav class="sticky top-0 z-50 bg-[#fafafa] border-b border-gray-300 transition-all duration-300">
+            <div class="w-full px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/150x50.png?text=Company+Logo" alt="Daksh FootWear Logo" class="h-12 w-auto">
+                    </div>
+                    <!-- Desktop Navigation -->
+                    <div class="hidden lg:flex items-center justify-center flex-1 space-x-12">
+                        <a href="index.html" class="relative text-secondary hover:text-primary group">
+<span class="block py-2 px-1 transition-colors duration-300">Home</span>
+<span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+</a>
+                        <a href="index.html#best" class="relative text-secondary hover:text-primary group">
+<span class="block py-2 px-1 transition-colors duration-300">BEST Collection</span>
+<span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+</a>
+                        <a href="index.html#walkaroo" class="relative text-secondary hover:text-primary group">
+<span class="block py-2 px-1 transition-colors duration-300">Walkaroo</span>
+<span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+</a>
+                        <a href="index.html#action" class="relative text-secondary hover:text-primary group">
+<span class="block py-2 px-1 transition-colors duration-300">Action</span>
+<span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+</a>
+                        <a href="index.html#brilliant" class="relative text-secondary hover:text-primary group">
+<span class="block py-2 px-1 transition-colors duration-300">Brilliant</span>
+<span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+</a>
+                        <a href="index.html#chinese" class="relative text-secondary hover:text-primary group">
+<span class="block py-2 px-1 transition-colors duration-300">Chinese</span>
+<span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+</a>
+                        <div class="relative group">
+                            <a href="search.html" class="relative text-secondary hover:text-primary inline-block">
+                                <span class="block py-2 px-1 transition-colors duration-300">More</span>
+                                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+                            </a>
+                            <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 5</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 6</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors duration-200">Brand 7</a>
+                            </div>
+                        </div>
+                        <a href="contact.html" class="relative text-secondary hover:text-primary group">
+<span class="block py-2 px-1 transition-colors duration-300">Contact Us</span>
+<span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+</a>
+                    </div>
+                    <div class="hidden lg:flex items-center ml-8">
+                        <span class="w-10 h-10 flex items-center justify-center text-primary">
+<i class="ri-search-line text-xl"></i>
+</span>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <div class="flex items-center space-x-4">
+                        <span class="lg:hidden w-8 h-8 flex items-center justify-center text-primary">
+<i class="ri-search-line text-xl"></i>
+</span>
+                        <button id="mobile-menu-btn" class="lg:hidden w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line text-xl"></i>
+</button>
+                    </div>
+                </div>
+                <!-- Mobile Navigation -->
+                <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-300">
+                    <div class="flex flex-col space-y-3 pt-4">
+                        <a href="index.html" class="text-secondary hover:text-primary transition-colors duration-200">Home</a>
+                        <a href="index.html#best" class="text-secondary hover:text-primary transition-colors duration-200">BEST Collection</a>
+                        <a href="index.html#walkaroo" class="text-secondary hover:text-primary transition-colors duration-200">Walkaroo</a>
+                        <a href="index.html#action" class="text-secondary hover:text-primary transition-colors duration-200">Action</a>
+                        <a href="index.html#brilliant" class="text-secondary hover:text-primary transition-colors duration-200">Brilliant</a>
+                        <a href="index.html#chinese" class="text-secondary hover:text-primary transition-colors duration-200">Chinese</a>
+                        <a href="search.html" class="text-secondary hover:text-primary transition-colors duration-200">More</a>
+                        <a href="contact.html" class="text-secondary hover:text-primary transition-colors duration-200">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <header class="bg-white border-b border-gray-100 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold text-secondary mb-4">All Products</h1>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Discover our complete collection of premium footwear from all brands</p>
+                </div>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-search-line"></i>
+                            </div>
+                        </div>
+                        <input type="text" id="searchInput" class="search-focus search-input-animation w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-sm placeholder-gray-500 transition-all duration-200" placeholder="Search products, brands...">
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Mobile Filter Overlay -->
+                <div id="filter-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden transition-opacity duration-300 ease-in-out"></div>
+                
+                <aside id="filters-panel" role="dialog" aria-modal="true" aria-labelledby="filters-title" class="fixed lg:relative inset-y-0 left-0 z-50 w-80 lg:w-64 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex-shrink-0 h-full lg:h-auto overflow-y-auto">
+                    <div class="bg-white h-full rounded-none lg:rounded-lg shadow-sm border border-gray-100 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 id="filters-title" class="text-lg font-semibold text-secondary">Filters</h2>
+                            <button id="close-filter-btn" class="lg:hidden w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
+                                <i class="ri-close-line text-xl"></i>
+                            </button>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-sm font-medium text-secondary mb-4">Brand</h3>
+                                <div class="space-y-3">
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="brand" value="all" class="custom-radio mr-3" checked>
+<span class="text-sm text-gray-700">All</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="brand" value="best" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">BEST</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="brand" value="walkaroo" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Walkaroo</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="brand" value="action" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Action</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="brand" value="brilliant" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Brilliant</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="brand" value="chinese" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Chinese</span>
+</label>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-medium text-secondary mb-4">Category</h3>
+                                <div class="space-y-3">
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="category" value="all" class="custom-radio mr-3" checked>
+<span class="text-sm text-gray-700">All</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="category" value="kids" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Kids</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="category" value="mens" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Men's</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="category" value="womens" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Women's</span>
+</label>
+                                    <label class="flex items-center cursor-pointer">
+<input type="radio" name="category" value="unisex" class="custom-radio mr-3">
+<span class="text-sm text-gray-700">Unisex</span>
+</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <main class="flex-1">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <div class="flex items-center gap-4 w-full sm:w-auto">
+                            <p id="productCount" class="text-gray-600">Showing 12 products</p>
+                            <button id="mobile-filter-btn" aria-expanded="false" class="lg:hidden flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm hover:border-gray-300 transition-colors">
+                                <i class="ri-filter-3-line"></i>
+                                <span>Filters</span>
+                            </button>
+                        </div>
+                        <div class="relative w-full sm:w-auto">
+                            <button class="sort-dropdown-btn flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm hover:border-gray-300 transition-colors w-full sm:w-auto">
+<span>Default</span>
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-arrow-down-s-line text-gray-500"></i>
+</div>
+</button>
+                            <div class="sort-dropdown absolute right-0 left-0 sm:left-auto top-full mt-1 w-full sm:w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 hidden">
+                                <div class="py-1">
+                                    <button class="sort-option w-full text-left px-4 py-2 text-sm hover:bg-gray-50" data-value="default">Default</button>
+                                    <button class="sort-option w-full text-left px-4 py-2 text-sm hover:bg-gray-50" data-value="newest">Newest First</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="best" data-category="mens" data-date="2024-12-15T00:00:00Z" data-date-ts="1734038400000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-secondary text-white px-2 py-1 rounded text-xs font-medium">BEST</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Premium%20black%20leather%20comfort%20PU%20slippers%20for%20men%2C%20professional%20footwear%2C%20clean%20white%20background%2C%20product%20photography%2C%20modern%20minimalist%20style%2C%20high%20quality%20materials%2C%20comfortable%20design&width=300&height=300&seq=1&orientation=squarish"
+                                        alt="Premium Comfort PU Slippers" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4 product-info-wrapper">
+                                <h3 class="font-medium text-secondary mb-1">Premium Comfort PU Slippers</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="action" data-category="womens" data-date="2024-12-20T00:00:00Z" data-date-ts="1734470400000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">Action</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Womens%20black%20EVA%20casual%20footwear%2C%20lightweight%20comfortable%20shoes%2C%20modern%20design%2C%20clean%20white%20background%2C%20product%20photography%2C%20sleek%20minimalist%20style%2C%20durable%20materials&width=300&height=300&seq=2&orientation=squarish"
+                                        alt="Women's EVA Casual Footwear" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-secondary mb-1">Women's EVA Casual Footwear</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="brilliant" data-category="kids" data-date="2024-12-25T00:00:00Z" data-date-ts="1734902400000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs font-medium">Brilliant</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Kids%20premium%20colorful%20sneakers%2C%20childrens%20athletic%20footwear%2C%20vibrant%20colors%2C%20comfortable%20design%2C%20clean%20white%20background%2C%20product%20photography%2C%20modern%20style%2C%20high%20quality%20materials&width=300&height=300&seq=3&orientation=squarish"
+                                        alt="Kids Premium Sneakers" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-secondary mb-1">Kids Premium Sneakers</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="chinese" data-category="unisex" data-date="2024-12-10T00:00:00Z" data-date-ts="1733606400000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-orange-600 text-white px-2 py-1 rounded text-xs font-medium">Chinese</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Summer%20flip-flops%20colorful%20beach%20sandals%2C%20casual%20footwear%2C%20bright%20tropical%20colors%2C%20comfortable%20design%2C%20clean%20white%20background%2C%20product%20photography%2C%20modern%20style%2C%20lightweight%20materials&width=300&height=300&seq=4&orientation=squarish"
+                                        alt="Summer Flip-Flops" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-secondary mb-1">Summer Flip-Flops</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="walkaroo" data-category="mens" data-date="2024-12-05T00:00:00Z" data-date-ts="1733174400000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-purple-600 text-white px-2 py-1 rounded text-xs font-medium">Walkaroo</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Mens%20formal%20leather%20dress%20shoes%2C%20professional%20business%20footwear%2C%20classic%20black%20design%2C%20clean%20white%20background%2C%20product%20photography%2C%20elegant%20style%2C%20premium%20materials%2C%20sophisticated%20look&width=300&height=300&seq=5&orientation=squarish"
+                                        alt="Men's Formal Leather Shoes" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-secondary mb-1">Men's Formal Leather Shoes</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-line text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="best" data-category="womens" data-date="2024-12-28T00:00:00Z" data-date-ts="1735161600000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-secondary text-white px-2 py-1 rounded text-xs font-medium">BEST</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Womens%20athletic%20running%20shoes%2C%20sports%20footwear%2C%20modern%20design%2C%20breathable%20materials%2C%20clean%20white%20background%2C%20product%20photography%2C%20performance%20style%2C%20comfortable%20fit&width=300&height=300&seq=6&orientation=squarish"
+                                        alt="Women's Athletic Running Shoes" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-secondary mb-1">Women's Athletic Running Shoes</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-half-line text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="action" data-category="kids" data-date="2024-12-18T00:00:00Z" data-date-ts="1734297600000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">Action</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Kids%20school%20shoes%20black%20leather%2C%20childrens%20formal%20footwear%2C%20durable%20construction%2C%20clean%20white%20background%2C%20product%20photography%2C%20classic%20style%2C%20comfortable%20design%20for%20daily%20wear&width=300&height=300&seq=7&orientation=squarish"
+                                        alt="Kids School Shoes" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-secondary mb-1">Kids School Shoes</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="product.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300" data-brand="brilliant" data-category="mens" data-date="2024-12-22T00:00:00Z" data-date-ts="1734643200000">
+                            <div class="relative">
+                                <div class="absolute top-3 left-3 z-10">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs font-medium">Brilliant</span>
+                                </div>
+                                <div class="aspect-square overflow-hidden">
+                                    <img src="https://readdy.ai/api/search-image?query=Mens%20casual%20canvas%20sneakers%2C%20comfortable%20everyday%20footwear%2C%20modern%20design%2C%20versatile%20style%2C%20clean%20white%20background%2C%20product%20photography%2C%20trendy%20look%2C%20durable%20materials&width=300&height=300&seq=8&orientation=squarish"
+                                        alt="Men's Casual Canvas Sneakers" class="product-image w-full h-full object-cover object-top">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-medium text-secondary mb-1">Men's Casual Canvas Sneakers</h3>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="flex text-orange-400">
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-fill text-sm"></i>
+                                        <i class="ri-star-line text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer id="contact" class="bg-secondary text-white py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2">
+                    <h3 class="font-['Pacifico'] text-2xl mb-4">Daksh FootWear</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Your trusted partner for premium wholesale and retail footwear solutions. We offer a comprehensive range of quality footwear from leading brands.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full hover:bg-red-700 transition-colors duration-200">
+<i class="ri-instagram-line"></i>
+</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full hover:bg-red-700 transition-colors duration-200">
+<i class="ri-facebook-fill"></i>
+</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full hover:bg-red-700 transition-colors duration-200">
+<i class="ri-twitter-fill"></i>
+</a>
+                    </div>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Home</a></li>
+                        <li><a href="#best" class="text-gray-300 hover:text-white transition-colors duration-200">Products</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-200">Contact</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">About Us</a></li>
+                    </ul>
+                </div>
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="ri-phone-line mr-3 text-primary"></i>
+                            <div class="text-gray-300">
+                                <div>+977 9814242237</div>
+                                <div>+977 9807189500</div>
+                                <div>+977 9817216878</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="ri-mail-line mr-3 text-primary"></i>
+                            <span class="text-gray-300">dakshfootwear06@gmail.com</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="ri-map-pin-line mr-3 text-primary mt-1"></i>
+                            <span class="text-gray-300">Birgunj, Parsa, Nepal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-300">© 2025 Daksh FootWear. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script id="sort-dropdown">
+        // Shared animation helper available globally
+        window.animateCard = function(card, show = true, delay = 0) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    if (show) {
+                        card.style.display = '';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                            resolve();
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                            resolve();
+                        }, 300);
+                    }
+                }, delay);
+            });
+        };
+
+        window.animateCards = function(cards, show = true) {
+            return Promise.all(cards.map((card, index) => 
+                animateCard(card, show, index * 50)
+            ));
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sortBtn = document.querySelector('.sort-dropdown-btn');
+            const sortDropdown = document.querySelector('.sort-dropdown');
+            const sortOptions = document.querySelectorAll('.sort-option');
+            const productContainer = document.querySelector('.grid');
+            let originalOrder = null;
+
+            // Helper function to get products in current order
+            function getProducts() {
+                return Array.from(document.querySelectorAll('.product-card'));
+            }
+
+            // Store original order when first sort is clicked
+            function storeOriginalOrder() {
+                if (!originalOrder) {
+                    originalOrder = getProducts();
+                }
+            }
+
+            // Sort products by given criteria
+            function sortProducts(criteria) {
+                storeOriginalOrder();
+                const products = getProducts();
+                
+                // Guard against empty product array
+                if (!products.length) {
+                    console.warn('No products to sort');
+                    return;
+                }
+                
+                const container = products[0].parentElement;
+
+                // Remove all products from DOM temporarily
+                products.forEach(product => product.remove());
+
+                // Sort products based on criteria
+                let sortedProducts;
+                switch(criteria) {
+                    case 'newest':
+                        sortedProducts = products.sort((a, b) => 
+                            parseInt(b.dataset.dateTs) - parseInt(a.dataset.dateTs));
+                        break;
+                    case 'default':
+                        sortedProducts = [...originalOrder];
+                        break;
+                }
+
+                // Reinsert products and animate them
+                sortedProducts.forEach(product => {
+                    container.appendChild(product);
+                    product.style.opacity = '0';
+                    product.style.transform = 'translateY(20px)';
+                });
+
+                // Animate all products and update filter state after animation
+                animateCards(sortedProducts, true).then(() => {
+                    if (typeof updateProducts === 'function') {
+                        updateProducts();
+                    }
+                });
+            }
+
+            // Add click handler for sort button
+            sortBtn.addEventListener('click', function() {
+                sortDropdown.classList.toggle('hidden');
+            });
+
+            // Add click handlers for sort options
+            sortOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const value = this.dataset.value;
+                    const text = this.textContent;
+                    sortBtn.querySelector('span').textContent = text;
+                    sortDropdown.classList.add('hidden');
+                    sortProducts(value);
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!sortBtn.contains(e.target) && !sortDropdown.contains(e.target)) {
+                    sortDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+    <script id="search-and-product-interactions">
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const productCards = document.querySelectorAll('.product-card');
+            const productTitles = document.querySelectorAll('.product-card h3');
+
+            function animateCards(cards, show = true) {
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        if (show) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                        }
+                    }, index * 50);
+                });
+            }
+
+            let searchTimeout;
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = this.value;
+                clearTimeout(searchTimeout);
+                this.classList.add('animate-pulse-soft');
+                searchTimeout = setTimeout(() => {
+                    if (typeof updateProducts === 'function') {
+                        updateProducts();
+                    }
+                    this.classList.remove('animate-pulse-soft');
+                }, 150);
+            });
+            productCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+                const image = card.querySelector('.product-image');
+                card.addEventListener('mouseenter', () => {
+                    image.style.transform = 'scale(1.08) translateY(-2%)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    image.style.transform = '';
+                });
+            });
+            animateCards(productCards);
+        });
+    </script>
+    <script id="filter-functionality">
+        document.addEventListener('DOMContentLoaded', function() {
+            const brandRadios = document.querySelectorAll('input[name="brand"]');
+            const categoryRadios = document.querySelectorAll('input[name="category"]');
+            const productCountDisplay = document.getElementById('productCount');
+            const productCards = document.querySelectorAll('.product-card');
+            
+            function animateCard(card, show, delay = 0) {
+                setTimeout(() => {
+                    if (show) {
+                        card.style.display = '';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                }, delay);
+            }
+
+            // Expose updateProducts globally
+            window.updateProducts = function() {
+                const selectedBrand = document.querySelector('input[name="brand"]:checked').value;
+                const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+                let visibleCount = 0;
+
+                // Get current search term if any
+                const searchInput = document.getElementById('searchInput');
+                const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+                productCards.forEach((card, index) => {
+                    const brand = card.dataset.brand;
+                    const category = card.dataset.category;
+                    const productName = card.querySelector('h3').textContent.toLowerCase();
+                    const brandKey = card.dataset.brand;
+                    
+                    // Map brand keys to human-readable labels for search
+                    const brandLabels = {
+                        'best': 'best',
+                        'action': 'action',
+                        'brilliant': 'brilliant',
+                        'chinese': 'chinese',
+                        'walkaroo': 'walkaroo'
+                    };
+                    
+                    const matchesBrand = selectedBrand === 'all' || brand === selectedBrand;
+                    const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+                    const matchesSearch = !searchTerm || 
+                        productName.includes(searchTerm) || 
+                        brandKey.includes(searchTerm) || 
+                        (brandLabels[brandKey] && brandLabels[brandKey].includes(searchTerm));
+                    
+                    const shouldShow = matchesBrand && matchesCategory && matchesSearch;
+                    
+                    if (shouldShow) {
+                        visibleCount++;
+                        animateCard(card, true, index * 50);
+                    } else {
+                        animateCard(card, false, index * 30);
+                    }
+                });
+
+                // Update product count display
+                productCountDisplay.textContent = `Showing ${visibleCount} product${visibleCount !== 1 ? 's' : ''}`;
+            }
+
+            // Add change event listeners for filters
+            brandRadios.forEach(radio => {
+                radio.addEventListener('change', updateProducts);
+            });
+
+            categoryRadios.forEach(radio => {
+                radio.addEventListener('change', updateProducts);
+            });
+
+            // Integrate with existing search functionality
+            const searchInput = document.getElementById('searchInput');
+            const originalSearchHandler = searchInput.oninput;
+            searchInput.oninput = function(e) {
+                clearTimeout(this.searchTimeout);
+                this.classList.add('animate-pulse-soft');
+                
+                this.searchTimeout = setTimeout(() => {
+                    updateProducts();
+                    this.classList.remove('animate-pulse-soft');
+                }, 150);
+            };
+
+            // Initial update to set correct product count and apply default filter state
+            updateProducts();
+        });
+
+        // Ensure initial state is set after all other scripts have loaded
+        setTimeout(updateProducts, 0);
+    </script>
+    <script id="mobile-menu-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+    <script id="mobile-filter-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtn = document.getElementById('mobile-filter-btn');
+            const closeFilterBtn = document.getElementById('close-filter-btn');
+            const filterPanel = document.getElementById('filters-panel');
+            const filterOverlay = document.getElementById('filter-overlay');
+            let isFilterOpen = false;
+
+            function openFilter() {
+                filterPanel.classList.remove('-translate-x-full');
+                filterOverlay.classList.remove('hidden');
+                setTimeout(() => filterOverlay.classList.remove('opacity-0'), 10);
+                document.body.style.overflow = 'hidden';
+                filterBtn.setAttribute('aria-expanded', 'true');
+                isFilterOpen = true;
+            }
+
+            function closeFilter() {
+                filterPanel.classList.add('-translate-x-full');
+                filterOverlay.classList.add('opacity-0');
+                setTimeout(() => filterOverlay.classList.add('hidden'), 300);
+                document.body.style.overflow = '';
+                filterBtn.setAttribute('aria-expanded', 'false');
+                isFilterOpen = false;
+            }
+
+            filterBtn.addEventListener('click', openFilter);
+            closeFilterBtn.addEventListener('click', closeFilter);
+            filterOverlay.addEventListener('click', closeFilter);
+
+            // Close filter panel on window resize if it reaches desktop breakpoint
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024 && isFilterOpen) {
+                    closeFilter();
+                }
+            });
+
+            // Handle escape key to close filter panel
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isFilterOpen) {
+                    closeFilter();
+                }
+            });
+        });
+    </script>
+    <script id="scroll-animations-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.animate-fade-in').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+    <script id="smooth-scroll-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    const isHashLink = href && href.startsWith('#');
+                    if (!isHashLink) return; // Let normal links pass
+                    const target = document.querySelector(href);
+                    if (!target) return; // No preventDefault if element not on this page
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
